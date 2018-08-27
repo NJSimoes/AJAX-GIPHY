@@ -2,12 +2,39 @@ $(document).ready(function(){
 
     var displayedButtons = ["jet ski", "canoe", "pontoon"];
 
+    function renderButtons(){ 
+
+        $("#buttons").empty();
+
+        for (var i = 0; i < displayedButtons.length; i++){
+
+            var newButton = $("<button>") 
+            newButton.attr("class", "btn btn-default");
+            newButton.attr("id", "input")  
+            newButton.attr("vessel-name", displayedButtons[i]); 
+            newButton.text(displayedButtons[i]); 
+            $("#buttons").append(newButton); 
+        }
+    }
+
+    $("#clickSubmitBtn").on("click", function(){
+
+        var input = $("#vessel").val().trim();
+        form.reset();
+        displayedButtons.push(input);
+                
+        renderButtons();
+
+        return false;
+    })
+
+
     function displayImg(){
 
-        $("#display-images").empty();
-        var input = $(this).attr("data-name");
+        $("#images").empty();
+        var input = $(this).attr("vessel-name");
         var limit = 10;
-        var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + input + "&limit=" + limit + "&api_key=dc6zaTOxFJmzC";   
+        var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + input + "&limit=" + limit + "&api_key=dFvCKxa7i16VqeR2IdykSdB9dKJEUXr3";   
 
         $.ajax({
             url: queryURL, 
@@ -32,25 +59,11 @@ $(document).ready(function(){
                 var pRating = $("<p>").text("Rating: " + rating);
                 displayDiv.append(pRating)
 
-                $("#display-images").append(displayDiv);
+                $("#images").append(displayDiv);
             }
         });
     }
 
-    function renderButtons(){ 
-
-        $("#display-buttons").empty();
-
-        for (var i = 0; i < displayedButtons.length; i++){
-
-            var newButton = $("<button>") 
-            newButton.attr("class", "btn btn-default");
-            newButton.attr("id", "input")  
-            newButton.attr("data-name", displayedButtons[i]); 
-            newButton.text(displayedButtons[i]); 
-            $("#display-buttons").append(newButton); 
-        }
-    }
 
     function imageChangeState() {          
 
@@ -69,16 +82,6 @@ $(document).ready(function(){
         }   
     }
 
-    $("#submitPress").on("click", function(){
-
-        var input = $("#user-input").val().trim();
-        form.reset();
-        displayedButtons.push(input);
-                
-        renderButtons();
-
-        return false;
-    })
 
     renderButtons();
 
